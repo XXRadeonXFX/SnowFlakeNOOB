@@ -14,7 +14,7 @@ select
 from 
     dev_db.stage_sch.raw_aqi 
 where 
-    index_record_ts is not null;
+    index_record_ts is not null
 order by id;
 
 -- Step-4
