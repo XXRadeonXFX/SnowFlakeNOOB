@@ -99,3 +99,17 @@ FROM
 )
 FILE_FORMAT = ( FORMAT_NAME = 'dev_db.stage_sch.JSON_FILE_FORMAT' )
 ON_ERROR = ABORT_STATEMENT;
+
+---------------------------------------------------
+--Convert Task from suspended to started state
+SHOW TASKS;
+USE ROLE accountadmin;
+GRANT EXECUTE TASK, EXECUTE MANAGED TASK ON ACCOUNT TO ROLE sysadmin; 
+USE ROLE sysadmin;
+
+ALTER TASK dev_db.stage_sch.copy_air_quality_data resume;
+SHOW TASKS;
+---------------------------------------------------
+
+SELECT * FROM raw_aqi LIMIT 10;
+
