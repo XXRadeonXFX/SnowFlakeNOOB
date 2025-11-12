@@ -20,3 +20,27 @@ CREATE FILE FORMAT IF NOT EXISTS json_file_format
 
 SHOW STAGES;
 LIST @raw_stg;
+
+
+--level-1
+SELECT
+* 
+FROM 
+    @dev_db.stage_sch.raw_stg
+    (FILE_FORMAT => JSON_FILE_FORMAT) t;
+
+
+--level-2
+SELECT
+    TRY_TO_TIMESTAMP(t.$1:records[0].last_update::text , 'dd-mm-yyyy hh24:mi:ss'  ) AS index_record_ts,
+    t.$1,
+    t.$1:total::int AS record_count,
+    t.$1:version::text AS json_version
+FROM 
+    @dev_db.stage_sch.raw_stg
+    (FILE_FORMAT => JSON_FILE_FORMAT) t;
+
+
+--level-3     
+    
+    
