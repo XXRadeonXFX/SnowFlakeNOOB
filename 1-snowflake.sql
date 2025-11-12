@@ -58,4 +58,21 @@ FROM @leetcode.public.stage_location
 
 
 
+SELECT
+  TRY_TO_TIMESTAMP( t.$1:records[0].last_update::text, 'dd-mm-yyyy hh24:mi:ss' ) AS index_records_ts,
+  t.$1:total::int AS record_count,
+  t.$1:version::text as json_version
+
+  --metadata information
+
+,metadata$filename as stafe_file_name
+,metadata$FILE_LAST_MODIFIED as _stg_file_load_ts
+,metadata$FILE_CONTENT_KEY as _stg_file_md5
+,CURRENT_TIMESTAMP() as _copy_data_ts
+
+FROM @leetcode.public.stage_location
+( file_format => my_json_ff ) t;
+
+
+
 
