@@ -1,0 +1,79 @@
+USE ROLE AS sysadmin ;
+
+USE DATABASE leetcode;
+
+SHOW WAREHOUSES;
+
+--CREATING ALL LAYER SCHEMA:
+CREATE DATABASE IF NOT EXISTS dev_db;
+CREATE SCHEMA IF NOT EXISTS dev_db.stage_sch;
+CREATE SCHEMA IF NOT EXISTS dev_db.clean_sch;
+CREATE SCHEMA IF NOT EXISTS dev_db.consumption_sch;
+CREATE SCHEMA IF NOT EXISTS dev_db.pubish_sch;
+
+SHOW SCHEMAS;
+
+
+
+--1 CREATING LOAD WAREHOUSE :
+CREATE WAREHOUSE IF NOT EXISTS load_wh
+    COMMENT = 'this is load warehouse for loading all the JSON files'
+    WAREHOUSE_SIZE = 'medium'
+    AUTO_RESUME = true
+    AUTO_SUSPEND = 60
+    ENABLE_QUERY_ACCELERATION = false
+    WAREHOUSE_TYPE = 'standard'
+    MIN_CLUSTER_COUNT = 1
+    MAX_CLUSTER_COUNT = 1
+    SCALING_POLICY = 'standard'
+    INITIALLY_SUSPENDED = true;
+
+--2 CREATING TRANSFORM WAREHOUSE :
+CREATE WAREHOUSE IF NOT EXISTS transform_wh 
+    COMMENT = 'this is ETL warehouse for all loading activity'
+    WAREHOUSE_SIZE = 'x-small'
+    AUTO_RESUME = true
+    AUTO_SUSPEND = 60
+    ENABLE_QUERY_ACCELERATION = false 
+    WAREHOUSE_TYPE = 'standard'
+    MIN_CLUSTER_COUNT = 1 
+    MAX_CLUSTER_COUNT = 1 
+    SCALING_POLICY = 'standard'
+    INITIALLY_SUSPENDED = true;
+
+--3 CREATING DASHBOARD WAREHOUSE WITH DIFERERNT RESUME TIME 
+CREATE WAREHOUSE IF NOT EXISTS steamlit_wh 
+    COMMENT = 'this is steamlit virtual warehouse'
+    WAREHOUSE_SIZE = 'x-small'
+    AUTO_RESUME = true
+    AUTO_SUSPEND = 600
+    ENABLE_QUERY_ACCELERATION = false 
+    WAREHOUSE_TYPE = 'standard'
+    MIN_CLUSTER_COUNT = 1 
+    MAX_CLUSTER_COUNT = 1 
+    SCALING_POLICY = 'standard'
+    INITIALLY_SUSPENDED = true;  
+
+--4 CREATING ADHOC WAREHOUSE
+CREATE WAREHOUSE IF NOT EXISTS adhoc_wh 
+    COMMENT = 'this is adhoc warehouse'
+    WAREHOUSE_SIZE = 'x-small'
+    AUTO_RESUME = true
+    AUTO_SUSPEND = 60
+    ENABLE_QUERY_ACCELERATION = false 
+    WAREHOUSE_TYPE = 'standard'
+    MIN_CLUSTER_COUNT = 1 
+    MAX_CLUSTER_COUNT = 1 
+    SCALING_POLICY = 'standard'
+    INITIALLY_SUSPENDED = true;     
+
+SHOW WAREHOUSES;
+    
+    
+    
+
+
+
+
+
+
