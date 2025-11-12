@@ -56,4 +56,19 @@ SELECT
 FROM 
     @dev_db.stage_sch.raw_stg
     (FILE_FORMAT => JSON_FILE_FORMAT) t;    
+
+
+CREATE OR REPLACE transient TABLE raw_aqi (
+    id INT PRIMARY KEY AUTOINCREMENT,
+    index_record_ts TIMESTAMP NOT NULL ,
+    json_data VARIANT NOT NULL,
+    record_count NUMBER NOT NULL DEFAULT 0,
+    json_version TEXT NOT NULL,
+
+    --audit Columns
+    _stg_file_name TEXT,
+    _stg_file_load_ts TIMESTAMP,
+    _stg_file_md5 TEXT,
+    _copy_data_ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
+    );
     
